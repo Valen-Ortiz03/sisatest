@@ -1,0 +1,63 @@
+---
+import "../styles/global.css";
+import Navbar from "../components/Navbar.astro";
+import BackgroundFX from "../components/ui/BackgroundFX.astro";
+
+const { title = "Mudanzas SISA" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>{title}</title>
+
+  <meta
+    name="description"
+    content="Mudanzas SISA: más de 75 años mudando familias con confianza. Servicio profesional, seguro y en todo el país."
+  />
+
+  <!-- Fuente -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    :root { --color-primary: #dc2626; }
+
+    html { font-family: "Montserrat", system-ui, sans-serif; }
+
+    body {
+      margin: 0;
+      background: #000;
+      color: #111827;
+      overflow-x: hidden;
+    }
+  </style>
+</head>
+
+<body class="antialiased relative">
+
+  <BackgroundFX />
+  <Navbar />
+
+  <main class="relative z-10">
+    <slot />
+  </main>
+
+<!-- Sistema reveal + smooth scroll -->
+
+<script>
+  import { initReveal } from "../scripts/reveal";
+  import { initSmoothScroll } from "../scripts/smoothScroll";
+
+  initSmoothScroll();
+  initReveal();
+</script>
+</body>
+</html>

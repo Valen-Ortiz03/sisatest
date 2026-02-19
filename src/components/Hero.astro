@@ -1,0 +1,157 @@
+---
+
+const slides = ["/hero-1.webp", "/hero-2.webp", "/hero-3.webp"];
+
+---
+
+<section id="hero" class="relative h-[72vh] sm:h-[78vh] md:h-[84vh] overflow-hidden">
+
+  <!-- SLIDER -->
+  <div id="hero-slider" class="absolute inset-0">
+    {slides.map((src, i) => (
+      <div
+        class="hero-slide absolute inset-0 opacity-0 transition-opacity duration-1000 ease-linear"
+        style={i === 0 ? "opacity:1" : ""}
+      >
+        <!-- capa parallax -->
+        <div class="parallax-layer absolute inset-0 will-change-transform scale-105">
+          <img
+            src={src}
+            alt="Mudanzas en CABA y Provincia de Buenos Aires"
+            class="w-full h-full object-cover object-center"
+            loading={i === 0 ? "eager" : "lazy"}
+            fetchpriority={i === 0 ? "high" : "auto"}
+            decoding="async"
+            width="1920"
+            height="1080"
+          />
+        </div>
+
+        <!-- overlay -->
+        <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-white/90" />
+      </div>
+    ))}
+  </div>
+
+  <!-- CONTENIDO -->
+  <div class="relative z-10 h-full flex items-center justify-center text-center px-6">
+    <div class="max-w-3xl">
+
+      <h1 data-reveal class="text-4xl sm:text-5xl md:text-6xl font-bold text-white">
+        Mudanzas en <span class="text-red-600">CABA y Provincia</span>
+      </h1>
+
+      <p data-reveal data-reveal-delay="200" class="mt-4 text-lg sm:text-xl text-gray-200">
+        Nos ocupamos de todo para que no te preocupes por nada.
+      </p>
+
+      <!-- BOTONES -->
+      <div data-reveal data-reveal-delay="400" class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#mudanzas"
+          class="bg-red-600 text-white font-semibold px-8 py-3 rounded-full
+                 border-2 border-transparent
+                 hover:scale-105 hover:shadow-lg
+                 transition duration-300">
+          Mudanzas Particulares
+        </a>
+
+        <a href="#guardamuebles"
+          class="bg-white text-gray-900 font-semibold px-8 py-3 rounded-full
+                 border-2 border-gray-300
+                 hover:bg-gray-50 hover:scale-105
+                 transition duration-300">
+          Guardamuebles
+        </a>
+      </div>
+
+      <p data-reveal data-reveal-delay="600" class="mt-6 text-sm text-gray-300">
+        Más de 80 años realizando mudanzas en Argentina.
+      </p>
+
+    </div>
+  </div>
+
+  <!-- INDICADOR SCROLL -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/70">
+    <div class="w-6 h-10 border border-white/50 rounded-full flex justify-center">
+      <div class="w-1 h-3 bg-white/70 rounded-full mt-2 animate-bounce"></div>
+    </div>
+  </div>
+
+</section>
+
+<script is:inline>
+/* ===============================
+   HERO SLIDER + PARALLAX PRO
+================================= */
+
+const slides = document.querySelectorAll(".hero-slide");
+const hero = document.getElementById("hero");
+const layers = document.querySelectorAll(".parallax-layer");
+
+let index = 0;
+let interval = null;
+
+/* ===== SLIDER ===== */
+
+function startSlider() {
+  if (interval || slides.length <= 1) return;
+
+  interval = setInterval(() => {
+    slides[index].style.opacity = "0";
+    index = (index + 1) % slides.length;
+    slides[index].style.opacity = "1";
+  }, 6000);
+}
+
+function stopSlider() {
+  if (!interval) return;
+  clearInterval(interval);
+  interval = null;
+}
+
+/* ===== PAUSAR CUANDO NO SE VE ===== */
+
+if ("IntersectionObserver" in window && hero) {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) startSlider();
+        else stopSlider();
+      });
+    },
+    { threshold: 0.2 }
+  );
+
+  observer.observe(hero);
+} else {
+  startSlider();
+}
+
+/* ===== PARALLAX LIVIANO ===== */
+
+if (
+  hero &&
+  layers.length &&
+  !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+) {
+  let ticking = false;
+
+  const update = () => {
+    const offset = hero.getBoundingClientRect().top * -0.08;
+    layers.forEach((l) => (l.style.transform = `translateY(${offset}px)`));
+    ticking = false;
+  };
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!ticking) {
+        requestAnimationFrame(update);
+        ticking = true;
+      }
+    },
+    { passive: true }
+  );
+}
+</script>

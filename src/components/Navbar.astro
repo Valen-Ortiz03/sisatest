@@ -1,0 +1,163 @@
+---
+const links = [
+  { href: "#mudanzas", label: "Mudanzas Particulares" },
+  { href: "#guardamuebles", label: "Guardamuebles" },
+  { href: "#nosotros", label: "Nosotros" },
+];
+---
+
+<header
+  id="navbar"
+  class="fixed top-0 left-0 w-full z-50
+         opacity-0 -translate-y-full
+         transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+>
+  <!-- CONTENEDOR -->
+  <nav
+    id="navbar-inner"
+    class="mx-auto max-w-7xl px-6 py-3
+           flex items-center justify-between
+           rounded-b-2xl
+           border border-transparent
+           bg-white/70 backdrop-blur-lg
+           shadow-[0_10px_30px_-10px_rgba(0,0,0,0.12)]
+           transition-all duration-500"
+  >
+    <!-- LOGO -->
+    <a href="/" class="flex items-center">
+      <img
+        src="/logo-sisa.webp"
+        alt="Mudanzas SISA"
+        class="h-20 w-auto object-contain"
+      />
+    </a>
+
+    <!-- LINKS DESKTOP -->
+    <ul
+      id="nav-links"
+      class="hidden md:flex gap-10 font-medium text-gray-800 transition-colors duration-300"
+    >
+      {links.map((l) => (
+        <li class="relative group">
+          <a
+            href={l.href}
+            data-link
+            class="transition-colors duration-300"
+          >
+            {l.label}
+          </a>
+
+          <!-- underline -->
+          <span
+            class="absolute left-0 -bottom-1 h-[2px] w-0
+                   bg-red-600
+                   transition-all duration-300 ease-out"
+          />
+        </li>
+      ))}
+    </ul>
+
+    <!-- HAMBURGUESA -->
+    <button
+      id="menu-btn"
+      class="md:hidden flex flex-col gap-1.5"
+      aria-label="Abrir menú"
+    >
+      <span class="w-6 h-0.5 bg-gray-900 transition-all duration-300"></span>
+      <span class="w-6 h-0.5 bg-gray-900 transition-all duration-300"></span>
+      <span class="w-6 h-0.5 bg-gray-900 transition-all duration-300"></span>
+    </button>
+  </nav>
+
+  <!-- MENU MOBILE -->
+  <div
+    id="mobile-menu"
+    class="md:hidden absolute top-full left-0 w-full
+           bg-white/95 backdrop-blur-md
+           shadow-2xl shadow-black/10
+           border-t border-black/5
+           opacity-0 pointer-events-none
+           transition-all duration-300"
+  >
+    <ul class="flex flex-col text-center py-6 gap-6 font-medium text-gray-800">
+      {links.map((l) => (
+        <li>
+          <a
+            href={l.href}
+            class="hover:text-red-600 transition-colors duration-200"
+          >
+            {l.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</header>
+
+<script is:inline>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const navbar = document.getElementById("navbar");
+  const navLinks = document.querySelectorAll("[data-link]");
+  const menuBtn = document.getElementById("menu-btn");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const hero = document.querySelector("section");
+
+  if (!navbar || !hero) return;
+
+  const heroHeight = hero.offsetHeight;
+
+  // Mostrar navbar al salir del hero
+  const updateNavbar = () => {
+    const scrolledPastHero = window.scrollY > heroHeight - 80;
+
+    navbar.classList.toggle("opacity-0", !scrolledPastHero);
+    navbar.classList.toggle("-translate-y-full", !scrolledPastHero);
+    navbar.classList.toggle("opacity-100", scrolledPastHero);
+    navbar.classList.toggle("translate-y-0", scrolledPastHero);
+  };
+
+  // Link activo según sección
+  const sections = [...navLinks].map(link =>
+    document.querySelector(link.getAttribute("href"))
+  );
+
+  const setActive = () => {
+    let index = sections.findIndex(sec =>
+      sec && sec.getBoundingClientRect().top <= 120 &&
+      sec.getBoundingClientRect().bottom >= 120
+    );
+
+    navLinks.forEach((link, i) => {
+      const underline = link.nextElementSibling;
+
+      if (i === index) {
+        link.classList.add("text-red-600");
+        underline.style.width = "100%";
+      } else {
+        link.classList.remove("text-red-600");
+        underline.style.width = "0%";
+      }
+    });
+  };
+
+  // Toggle mobile
+  menuBtn?.addEventListener("click", () => {
+    const open = mobileMenu.classList.contains("opacity-100");
+
+    mobileMenu.classList.toggle("opacity-100", !open);
+    mobileMenu.classList.toggle("pointer-events-auto", !open);
+    mobileMenu.classList.toggle("opacity-0", open);
+    mobileMenu.classList.toggle("pointer-events-none", open);
+  });
+
+  updateNavbar();
+  setActive();
+
+  window.addEventListener("scroll", () => {
+    updateNavbar();
+    setActive();
+  });
+
+});
+</script>

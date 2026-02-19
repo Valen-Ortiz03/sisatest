@@ -1,0 +1,127 @@
+---
+import Herramientas from "../assets/icons/Herramientas.svg";
+import Carros from "../assets/icons/Carros.svg";
+import Ayudante from "../assets/icons/Ayudante.svg";
+import Canastos from "../assets/icons/Canastos.svg";
+import Embalaje from "../assets/icons/Embalaje.svg";
+import Altura from "../assets/icons/Altura.svg";
+import Escalera from "../assets/icons/Escalera.svg";
+---
+
+<section
+  id="servicios"
+  class="relative py-24 px-6 bg-gray-50"
+>
+  <div class="max-w-6xl mx-auto text-center">
+
+    <!-- TÍTULO -->
+    <h2 data-reveal class="text-4xl md:text-5xl font-bold text-gray-900">
+      Nuestros Servicios
+    </h2>
+
+    <p
+      data-reveal
+      data-reveal-delay="120"
+      class="mt-4 text-gray-600 text-lg max-w-2xl mx-auto"
+    >
+      Todo lo que necesitás para una mudanza segura, eficiente y sin sorpresas.
+    </p>
+
+    <!-- ================= INCLUIDOS ================= -->
+    <h3
+      data-reveal
+      data-reveal-delay="220"
+      class="mt-16 text-xl font-semibold text-gray-900 tracking-wide"
+    >
+      Incluido en tu mudanza
+    </h3>
+
+    <div class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-12 place-items-center">
+
+      {[
+        { Icon: Herramientas, label: "Herramientas" },
+        { Icon: Carros, label: "Carros y mantas" },
+        { Icon: Canastos, label: "Canastos" },
+        { Icon: Embalaje, label: "Embalaje" },
+      ].map(({ Icon, label }, i) => (
+        <div
+          data-reveal
+          data-reveal-delay={i * 80}
+          class="group flex flex-col items-center"
+        >
+          <div
+            class="icon-wrap w-24 h-24 rounded-full bg-white border border-gray-200
+                   flex items-center justify-center shadow-sm relative overflow-hidden
+                   transition-all duration-300
+                   hover:scale-105 hover:border-red-200 hover:shadow-md"
+          >
+            <span class="glow"></span>
+            <Icon class="w-11 h-11 text-gray-800 relative z-10 transition-colors group-hover:text-red-600" />
+          </div>
+
+          <span class="mt-4 text-gray-900 text-base font-semibold">{label}</span>
+        </div>
+      ))}
+
+    </div>
+
+    <!-- ================= ADICIONALES ================= -->
+    <h3
+      data-reveal
+      data-reveal-delay="320"
+      class="mt-20 text-xl font-semibold text-gray-900 tracking-wide"
+    >
+      Servicios adicionales
+    </h3>
+
+    <div class="mt-10 flex flex-wrap justify-center gap-14">
+
+      {[
+        { Icon: Altura, label: "En altura" },
+        { Icon: Escalera, label: "Por escalera" },
+        { Icon: Ayudante, label: "Ayudante" },
+      ].map(({ Icon, label }, i) => (
+        <div
+          data-reveal
+          data-reveal-delay={i * 80}
+          class="group flex flex-col items-center"
+        >
+          <div
+            class="icon-wrap w-24 h-24 rounded-full bg-white border border-gray-200
+                   flex items-center justify-center relative overflow-hidden
+                   transition-all duration-300
+                   hover:scale-105 hover:border-red-200 hover:shadow-md"
+          >
+            <span class="glow"></span>
+            <Icon class="w-11 h-11 text-gray-700 relative z-10 transition-colors group-hover:text-red-600" />
+          </div>
+
+          <span class="mt-4 text-gray-900 text-base font-semibold">{label}</span>
+        </div>
+      ))}
+
+    </div>
+  </div>
+</section>
+
+<style>
+.icon-wrap {
+  position: relative;
+}
+
+.glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    100px circle at center,
+    rgba(220,38,38,0.14),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+
+.icon-wrap:hover .glow {
+  opacity: 1;
+}
+</style>

@@ -1,0 +1,41 @@
+<div class="relative w-full overflow-hidden leading-none">
+
+  <!-- glow suave atrás -->
+  <div class="absolute inset-0 flex justify-center">
+    <div class="w-[900px] h-[200px] bg-red-500/10 blur-[120px] rounded-full
+                animate-pulse-slow"></div>
+  </div>
+
+  <!-- curva glass -->
+  <svg
+    viewBox="0 0 1440 120"
+    preserveAspectRatio="none"
+    class="relative block w-full h-[90px] md:h-[120px]"
+  >
+    <defs>
+      <!-- degradado claro tipo glass -->
+      <linearGradient id="curveGlass" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="rgba(255,255,255,0.85)" />
+        <stop offset="100%" stop-color="rgba(255,255,255,0.35)" />
+      </linearGradient>
+    </defs>
+
+    <path
+      d="M0,40 C360,120 1080,0 1440,80 L1440,120 L0,120 Z"
+      fill="url(#curveGlass)"
+      class="backdrop-blur-md"
+    />
+  </svg>
+
+</div>
+
+<style>
+@keyframes pulseSlow {
+  0%,100% { opacity:.4; transform: scale(1); }
+  50%     { opacity:.7; transform: scale(1.05); }
+}
+
+.animate-pulse-slow {
+  animation: pulseSlow 6s ease-in-out infinite;
+}
+</style>

@@ -1,0 +1,142 @@
+---
+const image = "/guardamuebles.webp";
+
+const whatsappMsg =
+  "https://wa.me/5491123456789?text=Quiero%20consultar%20por%20la%20disponibilidad%20del%20Guardamuebles";
+---
+
+<section
+  id="guardamuebles"
+  class="py-28 bg-gray-50"
+>
+  <div class="max-w-6xl mx-auto px-6">
+
+    <!-- Header -->
+    <div class="text-center max-w-2xl mx-auto">
+      <h2
+        data-reveal
+        class="text-4xl md:text-5xl font-bold text-red-600"
+      >
+        Guardamuebles
+      </h2>
+
+      <p
+        data-reveal
+        data-reveal-delay="120"
+        class="mt-4 text-lg text-gray-600"
+      >
+        Espacios seguros y flexibles para cuidar lo que más valorás.
+      </p>
+    </div>
+
+    <!-- Grid principal -->
+    <div class="mt-20 grid md:grid-cols-2 gap-16 items-center">
+
+      <!-- TEXTO -->
+      <div class="max-w-xl">
+
+        <h3
+          data-reveal
+          class="text-2xl md:text-3xl font-semibold text-gray-900"
+        >
+          ¿Cómo funciona?
+        </h3>
+
+        <ol
+          data-reveal
+          data-reveal-delay="120"
+          class="mt-6 space-y-3 text-gray-700 text-lg"
+        >
+          <li>1. Retiramos tus muebles</li>
+          <li>2. Los almacenamos de forma segura</li>
+          <li>3. Te los devolvemos cuando lo necesites</li>
+        </ol>
+
+        <h3
+          data-reveal
+          data-reveal-delay="240"
+          class="mt-12 text-2xl md:text-3xl font-semibold text-gray-900"
+        >
+          Beneficios
+        </h3>
+
+        <ul
+          data-reveal
+          data-reveal-delay="360"
+          class="mt-6 space-y-5"
+        >
+          <li class="flex gap-3">
+            <span class="text-xl">🔒</span>
+            <div>
+              <p class="font-semibold text-gray-900">Seguridad</p>
+              <p class="text-gray-600">Vigilancia y acceso controlado</p>
+            </div>
+          </li>
+
+          <li class="flex gap-3">
+            <span class="text-xl">🧼</span>
+            <div>
+              <p class="font-semibold text-gray-900">Cuidado</p>
+              <p class="text-gray-600">Espacios limpios y protegidos</p>
+            </div>
+          </li>
+
+          <li class="flex gap-3">
+            <span class="text-xl">📦</span>
+            <div>
+              <p class="font-semibold text-gray-900">Embalaje</p>
+              <p class="text-gray-600">Guardado seguro para evitar daños</p>
+            </div>
+          </li>
+
+          <li class="flex gap-3">
+            <span class="text-xl">⏱</span>
+            <div>
+              <p class="font-semibold text-gray-900">Flexibilidad</p>
+              <p class="text-gray-600">Corto o largo plazo</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- IMAGEN + CTA -->
+      <div class="flex flex-col items-center">
+
+        <img
+          data-reveal
+          src={image}
+          alt="Guardamuebles seguro"
+          class="w-full max-w-lg rounded-2xl shadow-lg object-cover"
+          loading="lazy"
+          decoding="async"
+        />
+
+        <p
+          data-reveal
+          data-reveal-delay="120"
+          class="mt-6 text-gray-700 text-center"
+        >
+          ¿Necesitás guardar tus muebles por un tiempo?
+        </p>
+
+        <a
+          data-reveal
+          data-reveal-delay="240"
+          href={whatsappMsg}
+          target="_blank"
+          rel="noopener"
+          class="mt-4 inline-flex items-center gap-2
+                 bg-green-600
+                 text-white font-semibold
+                 px-7 py-3 rounded-full
+                 shadow-md
+                 transition-transform duration-300
+                 hover:scale-105 hover:bg-green-700"
+        >
+          Hacenos tu consulta →
+        </a>
+
+      </div>
+    </div>
+  </div>
+</section>

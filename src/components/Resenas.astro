@@ -1,0 +1,78 @@
+---
+// Datos editables
+const reviews = [
+  {
+    name: "María G.",
+    text: "Llegaron puntuales, súper cuidadosos con todo y muy amables. La mudanza fue rapidísima.",
+    rating: 5,
+    location: "Palermo",
+  },
+  {
+    name: "Javier R.",
+    text: "Excelente servicio. Protegieron todos los muebles y cumplieron con el horario.",
+    rating: 5,
+    location: "Caballito",
+  },
+  {
+    name: "Lucía M.",
+    text: "Muy profesionales y atentos. Sin dudas los volvería a contratar.",
+    rating: 5,
+    location: "Belgrano",
+  },
+];
+---
+
+<section id="resenas" class="py-24 bg-gray-50">
+  <div class="max-w-6xl mx-auto px-6">
+
+    <!-- Título -->
+    <div class="text-center">
+      <h2 class="text-4xl md:text-5xl font-bold text-gray-900">
+        Reseñas de nuestros clientes
+      </h2>
+
+      <p class="mt-4 text-gray-600 text-lg">
+        Más de 80 años brindando mudanzas seguras en Buenos Aires.
+      </p>
+    </div>
+
+    <!-- Promedio estrellas -->
+    <div class="mt-10 flex flex-col items-center">
+      <div class="flex text-amber-400 text-2xl leading-none">
+        ★★★★★
+      </div>
+      <p class="mt-2 text-gray-700 font-medium">
+        Calificación promedio de 5.0 en clientes reales
+      </p>
+    </div>
+
+    <!-- Cards reseñas -->
+    <div class="mt-14 grid gap-8 md:grid-cols-3">
+      {reviews.map((r) => (
+        <article
+          class="bg-white rounded-2xl border border-gray-100 p-6
+                 shadow-sm
+                 transition-transform duration-300 ease-out
+                 hover:-translate-y-1 hover:shadow-md"
+        >
+          <!-- estrellas -->
+          <div class="text-amber-400 text-lg leading-none">
+            {"★".repeat(r.rating)}
+          </div>
+
+          <!-- texto -->
+          <p class="mt-4 text-gray-700 leading-relaxed">
+            “{r.text}”
+          </p>
+
+          <!-- autor -->
+          <footer class="mt-6">
+            <p class="font-semibold text-gray-900">{r.name}</p>
+            <p class="text-sm text-gray-500">{r.location}, Buenos Aires</p>
+          </footer>
+        </article>
+      ))}
+    </div>
+
+  </div>
+</section>

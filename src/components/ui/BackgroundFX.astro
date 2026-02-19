@@ -1,0 +1,55 @@
+<div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+
+  <!-- BASE CLARA -->
+  <div class="absolute inset-0
+              bg-gradient-to-b
+              from-neutral-50
+              via-neutral-100
+              to-neutral-200">
+  </div>
+
+  <!-- LUZ DINÁMICA -->
+  <div
+    id="scroll-light"
+    class="absolute left-1/2 -translate-x-1/2
+           w-[900px] h-[900px]
+           rounded-full
+           bg-white/40 blur-[160px]
+           will-change-transform"
+    style="top: 20vh;"
+  ></div>
+
+  <!-- GLOW ROJO -->
+  <div class="absolute bottom-[-20%] left-1/2 -translate-x-1/2
+              w-[800px] h-[800px]
+              bg-red-600/10 blur-[160px] rounded-full">
+  </div>
+
+  <!-- RUIDO -->
+  <div class="absolute inset-0 opacity-[0.015] mix-blend-multiply
+              bg-[url('/noise.png')]">
+  </div>
+
+</div>
+
+<script is:inline>
+const light = document.getElementById("scroll-light");
+
+if (light) {
+  let lastY = -1;
+
+  const loop = () => {
+    const y = window.scrollY * 0.25;
+
+    /* evita writes innecesarios → clave para 60fps */
+    if (y !== lastY) {
+      light.style.transform = `translate(-50%, ${y}px)`;
+      lastY = y;
+    }
+
+    requestAnimationFrame(loop);
+  };
+
+  requestAnimationFrame(loop);
+}
+</script>
