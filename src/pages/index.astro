@@ -10,6 +10,7 @@ import Guardamuebles from "../components/Guardamuebles.astro";
 import Resenas from "../components/Resenas.astro";
 import Clientes from "../components/Clientes.astro";
 import WhatsAppFloat from "../components/WhatsAppFloat.astro";
+import ContactModal from "../components/ContactModal.astro";
 import Footer from "../components/Footer.astro";
 ---
 
@@ -20,10 +21,13 @@ import Footer from "../components/Footer.astro";
   <CurveDivider />
 
   <!-- MUDANZAS -->
-  <Mudanzas />
+   <section id="mudanzasparticulares">
+     <Mudanzas />
+    </section>
 
   <!-- PRESUPUESTO CTA -->
   <PresupuestoCTA />
+  <ContactModal />
   <CurveDivider />
 
   <!-- SERVICIOS -->
@@ -35,9 +39,10 @@ import Footer from "../components/Footer.astro";
   <CurveDivider />
 
   <!-- GUARDAMUEBLES -->
-  <Guardamuebles />
-  <CurveDivider />
-
+  <section id="guardamuebles">
+    <Guardamuebles />
+    <CurveDivider />
+  </section>
   <!-- RESEÑAS -->
   <Resenas />
 
@@ -49,6 +54,6 @@ import Footer from "../components/Footer.astro";
 
   <!-- FOOTER -->
   <CurveDivider />
-  <Footer />
+
 
 </BaseLayout>

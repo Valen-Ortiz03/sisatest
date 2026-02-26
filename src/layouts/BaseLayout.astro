@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import Navbar from "../components/Navbar.astro";
 import BackgroundFX from "../components/ui/BackgroundFX.astro";
+import Footer from "../components/Footer.astro";
 
 const { title = "Mudanzas SISA" } = Astro.props;
 ---
@@ -46,10 +47,10 @@ const { title = "Mudanzas SISA" } = Astro.props;
   <BackgroundFX />
   <Navbar />
 
-  <main class="relative z-10">
+  <main class="relative z-10 min-h-screen">
     <slot />
   </main>
-
+  <Footer />
 <!-- Sistema reveal + smooth scroll -->
 
 <script>

@@ -1,0 +1,131 @@
+---
+const images = [
+  { src: "/empresa1.webp", alt: "Equipo profesional realizando mudanza residencial" },
+  { src: "/empresa2.webp", alt: "Camión de mudanzas SISA en traslado urbano" },
+  { src: "/empresa3.webp", alt: "Personal embalando muebles con protección especializada" },
+  { src: "/empresa4.webp", alt: "Servicio de guardamuebles seguro y monitoreado" }
+];
+---
+
+<div class="w-full flex justify-center my-16 px-6">
+  <div class="relative w-full max-w-4xl aspect-[16/10]">
+
+    {images.map((image, index) => (
+      <img
+        src={image.src}
+        alt={image.alt}
+        loading={index === 0 ? "eager" : "lazy"}
+        class="slide absolute inset-0 w-full h-full object-cover rounded-2xl opacity-0 transition-opacity duration-700 ease-in-out"
+        data-index={index}
+      />
+    ))}
+
+    <!-- Flecha izquierda -->
+    <button id="prevBtn"
+      class="absolute left-4 top-1/2 -translate-y-1/2 z-20
+             bg-black/40 hover:bg-black/60
+             text-white w-10 h-10
+             rounded-full flex items-center justify-center
+             transition">
+      ‹
+    </button>
+
+    <!-- Flecha derecha -->
+    <button id="nextBtn"
+      class="absolute right-4 top-1/2 -translate-y-1/2 z-20
+             bg-black/40 hover:bg-black/60
+             text-white w-10 h-10
+             rounded-full flex items-center justify-center
+             transition">
+      ›
+    </button>
+
+    <!-- Indicadores -->
+    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-3 z-20">
+      {images.map((_, i) => (
+        <button
+          class="dot w-3 h-3 rounded-full bg-white/50 transition-all"
+          data-index={i}
+        ></button>
+      ))}
+    </div>
+
+  </div>
+</div>
+
+<script is:inline>
+  const slides = document.querySelectorAll(".slide");
+  const dots = document.querySelectorAll(".dot");
+  const nextBtn = document.getElementById("nextBtn");
+  const prevBtn = document.getElementById("prevBtn");
+
+  let current = 0;
+  let interval;
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.style.opacity = i === index ? "1" : "0";
+    });
+
+    dots.forEach((dot, i) => {
+      dot.classList.toggle("bg-white", i === index);
+      dot.classList.toggle("bg-white/50", i !== index);
+      dot.classList.toggle("scale-110", i === index);
+    });
+
+    current = index;
+  }
+
+  function next() {
+    showSlide((current + 1) % slides.length);
+  }
+
+  function prev() {
+    showSlide((current - 1 + slides.length) % slides.length);
+  }
+
+  function startAuto() {
+    interval = setInterval(next, 5000);
+  }
+
+  function resetAuto() {
+    clearInterval(interval);
+    startAuto();
+  }
+
+  nextBtn?.addEventListener("click", () => {
+    prev();
+    resetAuto();
+  });
+
+  prevBtn?.addEventListener("click", () => {
+    next();
+    resetAuto();
+  });
+
+  dots.forEach(dot => {
+    dot.addEventListener("click", () => {
+      const index = Number(dot.getAttribute("data-index"));
+      showSlide(index);
+      resetAuto();
+    });
+  });
+
+  // Swipe móvil
+  let startX = 0;
+
+  slides.forEach(slide => {
+    slide.addEventListener("touchstart", (e) => {
+      startX = e.touches[0].clientX;
+    });
+
+    slide.addEventListener("touchend", (e) => {
+      const diff = startX - e.changedTouches[0].clientX;
+      if (diff > 50) next();
+      if (diff < -50) prev();
+    });
+  });
+
+  showSlide(0);
+  startAuto();
+</script>

@@ -1,0 +1,108 @@
+---
+// ContactModal.astro
+---
+
+<div id="contact-modal" class="fixed inset-0 hidden items-center justify-center bg-black/60 z-50">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-8 relative animate-fadeIn">
+
+    <button id="close-modal" class="absolute top-4 right-4 text-gray-500 hover:text-red-600">
+      ✕
+    </button>
+
+    <h2 class="text-2xl font-bold mb-6 text-center">
+      Solicitar Presupuesto
+    </h2>
+
+    <form id="contact-form" class="space-y-4">
+
+      <input type="text" name="website" class="hidden" />
+
+      <div class="grid grid-cols-2 gap-4">
+        <input name="nombre" placeholder="Nombre" required class="input-style" />
+        <input name="apellido" placeholder="Apellido" required class="input-style" />
+      </div>
+
+      <input name="telefono" placeholder="Teléfono" required class="input-style" />
+      <input name="email" type="email" placeholder="Email" required class="input-style" />
+
+      <select name="ambientes" required class="input-style">
+        <option value="">Cantidad de ambientes</option>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4 o más</option>
+      </select>
+
+      <select name="contactoPreferido" required class="input-style">
+        <option value="">¿Cómo prefiere ser contactado?</option>
+        <option>WhatsApp</option>
+        <option>Email</option>
+      </select>
+
+      <button type="submit" class="w-full bg-red-600 text-white py-3 rounded-xl hover:bg-red-700 transition">
+        Enviar solicitud
+      </button>
+
+      <p id="form-message" class="text-center text-sm"></p>
+
+    </form>
+  </div>
+</div>
+
+<script>
+const modal = document.getElementById("contact-modal");
+const closeBtn = document.getElementById("close-modal");
+const form = document.getElementById("contact-form") as HTMLFormElement;
+const message = document.getElementById("form-message");
+
+document.querySelectorAll(".open-modal").forEach(btn => {
+  btn.addEventListener("click", () => {
+    modal?.classList.remove("hidden");
+    modal?.classList.add("flex");
+  });
+});
+
+closeBtn?.addEventListener("click", () => {
+  modal?.classList.add("hidden");
+  modal?.classList.remove("flex");
+});
+
+form?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const data = Object.fromEntries(new FormData(form));
+
+  const res = await fetch("/api/contact", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  });
+
+  const result = await res.json();
+
+  if (message) {
+    if (result.success) {
+      message.textContent = "Solicitud enviada correctamente.";
+      form?.reset();
+    } else {
+      message.textContent = "Ocurrió un error. Intente nuevamente.";
+    }
+  }
+});
+</script>
+
+<style>
+.input-style {
+  width: 100%;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 12px;
+}
+.animate-fadeIn {
+  animation: fadeIn .3s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+</style>

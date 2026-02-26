@@ -1,3 +1,7 @@
+---
+import ContactModal from "./ContactModal.astro";
+---
+
 <section class="relative px-6 py-28 overflow-hidden">
 
   <!-- fondo oscuro  -->
@@ -22,9 +26,9 @@
     </h2>
 
     <a
-      href="https://wa.me/5491154586060"
+      id="openModal"
       target="Hola que tal, me gustaría solicitar un presupuesto para una mudanza."
-      class="inline-block mt-12 rounded-full
+      class="open-modal inline-block mt-12 rounded-full
              bg-red-600 px-12 py-4
              text-white font-semibold text-lg
              border border-red-500/40
@@ -38,3 +42,5 @@
 
   </div>
 </section>
+
+<ContactModal />
