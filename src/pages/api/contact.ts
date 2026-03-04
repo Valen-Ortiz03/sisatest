@@ -117,7 +117,7 @@ export const POST: APIRoute = async ({ request }) => {
         <!-- LOGO -->
         <tr>
           <td>
-            <img src="/logo-sisa.png" alt="Mudanzas SISA" width="180" style="display:block;margin:0 auto 20px;" />
+            <img src="https://sisatest.vercel.app/logo-sisa.webp" alt="Mudanzas SISA" width="180" style="display:block;margin:0 auto 20px;" />
           </td>
         </tr>
 

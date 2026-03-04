@@ -9,7 +9,9 @@
 
 body {
   min-height: 100vh;
-  background: transparent;
+  background: #ffffff;
+  color: #111827;
+  overflow-x: hidden;
 }
 
 /* capa visual real */
@@ -117,4 +119,24 @@ body::after {
   opacity: 1;
   transform: none;
   filter: blur(0);
+}
+
+@media (max-width: 768px) {
+
+  
+  .backdrop-blur-md,
+  .backdrop-blur-lg {
+    backdrop-filter: none !important;
+  }
+
+ 
+  [class*="shadow-"] {
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08) !important;
+  }
+
+
+  * {
+    transition-duration: 0.25s !important;
+  }
+
 }

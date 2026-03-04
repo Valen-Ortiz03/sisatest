@@ -16,6 +16,5 @@ export function initSmoothScroll() {
 
   requestAnimationFrame(raf);
 
-  // DEBUG visual en consola
-  console.log("Lenis iniciado");
+
 }
