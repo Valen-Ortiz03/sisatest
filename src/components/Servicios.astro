@@ -10,118 +10,141 @@ import Escalera from "../assets/icons/Escalera.svg";
 
 <section
   id="servicios"
-  class="relative py-24 px-6 bg-gray-50"
+  data-reveal
+  class="relative pt-28 pb-24 px-6 bg-gradient-to-b from-gray-50 to-white"
 >
-  <div class="max-w-6xl mx-auto text-center">
+  <div class="max-w-6xl mx-auto">
 
-    <!-- TÍTULO -->
-    <h2 data-reveal class="text-4xl md:text-5xl font-bold text-gray-900">
-      Nuestros Servicios
-    </h2>
+    <!-- HEADER PRINCIPAL -->
+    <div class="text-center max-w-2xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900">
+        Nuestros Servicios
+      </h2>
 
-    <p
-      data-reveal
-      data-reveal-delay="120"
-      class="mt-4 text-gray-600 text-lg max-w-2xl mx-auto"
-    >
-      Todo lo que necesitás para una mudanza segura, eficiente y sin sorpresas.
-    </p>
+      <p class="mt-6 text-gray-600 text-base md:text-lg leading-relaxed">
+        Todo lo que necesitás para una mudanza segura, eficiente y sin sorpresas.
+      </p>
+    </div>
 
     <!-- ================= INCLUIDOS ================= -->
-    <h3
-      data-reveal
-      data-reveal-delay="220"
-      class="mt-16 text-xl font-semibold text-gray-900 tracking-wide"
+    <div
+      class="mt-16
+             rounded-3xl
+             bg-white/70
+             backdrop-blur-md
+             border border-white/40
+             shadow-[0_25px_70px_-20px_rgba(0,0,0,0.15)]
+             p-8 md:p-12"
     >
-      Incluido en tu mudanza
-    </h3>
 
-    <div class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-12 place-items-center">
+      <!-- Título con líneas -->
+      <div class="flex items-center justify-center gap-4">
+        <div class="flex-1 h-px bg-neutral-300/60"></div>
 
-      {[
-        { Icon: Herramientas, label: "Herramientas" },
-        { Icon: Carros, label: "Carros y mantas" },
-        { Icon: Canastos, label: "Canastos" },
-        { Icon: Embalaje, label: "Embalaje" },
-      ].map(({ Icon, label }, i) => (
-        <div
-          data-reveal
-          data-reveal-delay={i * 80}
-          class="group flex flex-col items-center"
-        >
-          <div
-            class="icon-wrap w-24 h-24 rounded-full bg-white border border-gray-200
-                   flex items-center justify-center shadow-sm relative overflow-hidden
-                   transition-all duration-300
-                   hover:scale-105 hover:border-red-200 hover:shadow-md"
-          >
-            <span class="glow"></span>
-            <Icon class="w-11 h-11 text-gray-800 relative z-10 transition-colors group-hover:text-red-600" />
+        <h3 class="text-xl md:text-2xl font-semibold text-red-600 whitespace-nowrap">
+          Incluido en tu mudanza
+        </h3>
+
+        <div class="flex-1 h-px bg-neutral-300/60"></div>
+      </div>
+
+      <div class="flex justify-center mt-3">
+        <div class="w-2 h-2 bg-red-600 rounded-full"></div>
+      </div>
+
+      <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-12">
+
+        {[
+          { Icon: Herramientas, label: "Herramientas" },
+          { Icon: Carros, label: "Carros y mantas" },
+          { Icon: Canastos, label: "Canastos" },
+          { Icon: Embalaje, label: "Embalaje" },
+        ].map(({ Icon, label }) => (
+          <div class="flex flex-col items-center text-center group">
+
+            <div
+              class="w-24 h-24
+                     rounded-full
+                     bg-white
+                     border border-neutral-200
+                     shadow-md
+                     flex items-center justify-center
+                     transition-all duration-300
+                     group-hover:shadow-xl
+                     group-hover:-translate-y-1
+                     group-hover:border-red-200"
+            >
+              <Icon class="w-11 h-11 text-gray-700 group-hover:text-red-600 transition-colors duration-300" />
+            </div>
+
+            <span class="mt-5 text-gray-800 font-semibold text-sm md:text-base">
+              {label}
+            </span>
+
           </div>
+        ))}
 
-          <span class="mt-4 text-gray-900 text-base font-semibold">{label}</span>
-        </div>
-      ))}
-
+      </div>
     </div>
 
     <!-- ================= ADICIONALES ================= -->
-    <h3
-      data-reveal
-      data-reveal-delay="320"
-      class="mt-20 text-xl font-semibold text-gray-900 tracking-wide"
+    <div
+      class="mt-14
+             rounded-3xl
+             bg-white/70
+             backdrop-blur-md
+             border border-white/40
+             shadow-[0_25px_70px_-20px_rgba(0,0,0,0.15)]
+             p-8 md:p-12"
     >
-      Servicios adicionales
-    </h3>
 
-    <div class="mt-10 flex flex-wrap justify-center gap-14">
+      <div class="flex items-center justify-center gap-4">
+        <div class="flex-1 h-px bg-neutral-300/60"></div>
 
-      {[
-        { Icon: Altura, label: "En altura" },
-        { Icon: Escalera, label: "Por escalera" },
-        { Icon: Ayudante, label: "Ayudante" },
-      ].map(({ Icon, label }, i) => (
-        <div
-          data-reveal
-          data-reveal-delay={i * 80}
-          class="group flex flex-col items-center"
-        >
-          <div
-            class="icon-wrap w-24 h-24 rounded-full bg-white border border-gray-200
-                   flex items-center justify-center relative overflow-hidden
-                   transition-all duration-300
-                   hover:scale-105 hover:border-red-200 hover:shadow-md"
-          >
-            <span class="glow"></span>
-            <Icon class="w-11 h-11 text-gray-700 relative z-10 transition-colors group-hover:text-red-600" />
+        <h3 class="text-xl md:text-2xl font-semibold text-red-600 whitespace-nowrap">
+          Servicios adicionales
+        </h3>
+
+        <div class="flex-1 h-px bg-neutral-300/60"></div>
+      </div>
+
+      <div class="flex justify-center mt-3">
+        <div class="w-2 h-2 bg-red-600 rounded-full"></div>
+      </div>
+
+      <div class="mt-12 grid grid-cols-2 md:grid-cols-3 gap-10 md:gap-12">
+
+        {[
+          { Icon: Altura, label: "En altura" },
+          { Icon: Escalera, label: "Por escalera" },
+          { Icon: Ayudante, label: "Ayudante" },
+        ].map(({ Icon, label }) => (
+          <div class="flex flex-col items-center text-center group">
+
+            <div
+              class="w-24 h-24
+                     rounded-full
+                     bg-white
+                     border border-neutral-200
+                     shadow-md
+                     flex items-center justify-center
+                     transition-all duration-300
+                     group-hover:shadow-xl
+                     group-hover:-translate-y-1
+                     group-hover:border-red-200"
+            >
+              <Icon class="w-11 h-11 text-gray-700 group-hover:text-red-600 transition-colors duration-300" />
+            </div>
+
+            <span class="mt-5 text-gray-800 font-semibold text-sm md:text-base">
+              {label}
+            </span>
+
           </div>
+        ))}
 
-          <span class="mt-4 text-gray-900 text-base font-semibold">{label}</span>
-        </div>
-      ))}
-
+      </div>
     </div>
+
   </div>
 </section>
-
-<style>
-.icon-wrap {
-  position: relative;
-}
-
-.glow {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    100px circle at center,
-    rgba(220,38,38,0.14),
-    transparent 60%
-  );
-  opacity: 0;
-  transition: opacity .25s ease;
-}
-
-.icon-wrap:hover .glow {
-  opacity: 1;
-}
-</style>

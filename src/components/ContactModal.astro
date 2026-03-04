@@ -2,10 +2,10 @@
 // ContactModal.astro
 ---
 
-<div id="contact-modal" class="fixed inset-0 hidden items-center justify-center bg-black/60 z-50">
-  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-8 relative animate-fadeIn">
+<div id="contact-modal" class="fixed inset-0 hidden items-center justify-center bg-black/60 z-50 transition-opacity duration-300">
+  <div id="modal-content" class="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-8 relative animate-fadeIn">
 
-    <button id="close-modal" class="absolute top-4 right-4 text-gray-500 hover:text-red-600">
+    <button id="close-modal" class="absolute top-4 right-4 text-gray-500 hover:text-red-600 transition">
       ✕
     </button>
 
@@ -39,9 +39,14 @@
         <option>Email</option>
       </select>
 
-      <button type="submit" class="w-full bg-red-600 text-white py-3 rounded-xl hover:bg-red-700 transition">
-        Enviar solicitud
-      </button>
+      <a 
+        id="submit-btn"
+        type="submit" 
+        class="w-full bg-red-600 text-white py-3 rounded-xl hover:bg-red-700 transition flex items-center justify-center gap-2 cursor-pointer"
+      >
+        <span id="btn-text">Enviar solicitud</span>
+        <span id="btn-spinner" class="spinner hidden"></span>
+      </a>
 
       <p id="form-message" class="text-center text-sm"></p>
 
@@ -49,44 +54,107 @@
   </div>
 </div>
 
+<!-- Toast -->
+<div id="toast" class="fixed bottom-6 right-6 bg-green-600 text-white px-6 py-3 rounded-xl shadow-lg opacity-0 pointer-events-none transition-all duration-300">
+  ✔ Solicitud enviada correctamente
+</div>
+
 <script>
 const modal = document.getElementById("contact-modal");
+const modalContent = document.getElementById("modal-content");
 const closeBtn = document.getElementById("close-modal");
-const form = document.getElementById("contact-form") as HTMLFormElement;
+const form = document.getElementById("contact-form");
 const message = document.getElementById("form-message");
+
+const submitBtn = document.getElementById("submit-btn");
+const btnText = document.getElementById("btn-text");
+const spinner = document.getElementById("btn-spinner");
+
+const toast = document.getElementById("toast");
 
 document.querySelectorAll(".open-modal").forEach(btn => {
   btn.addEventListener("click", () => {
-    modal?.classList.remove("hidden");
-    modal?.classList.add("flex");
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
   });
 });
 
-closeBtn?.addEventListener("click", () => {
-  modal?.classList.add("hidden");
-  modal?.classList.remove("flex");
-});
+function closeModal() {
+  modal.classList.add("opacity-0");
+  setTimeout(() => {
+    modal.classList.add("hidden");
+    modal.classList.remove("flex", "opacity-0");
+  }, 200);
+}
+
+closeBtn?.addEventListener("click", closeModal);
 
 form?.addEventListener("submit", async (e) => {
   e.preventDefault();
 
+  submitBtn.disabled = true;
+  submitBtn.classList.add("opacity-70", "cursor-not-allowed");
+
+  btnText.textContent = "Enviando...";
+  spinner.classList.remove("hidden");
+
   const data = Object.fromEntries(new FormData(form));
 
-  const res = await fetch("/api/contact", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data)
-  });
+  try {
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
 
-  const result = await res.json();
+    const result = await res.json();
 
-  if (message) {
     if (result.success) {
+
+      // Mostrar estado éxito en botón
+      spinner.classList.add("hidden");
+      btnText.textContent = "✔ Enviado";
+
+      // Mensaje dentro del modal
       message.textContent = "Solicitud enviada correctamente.";
-      form?.reset();
+      message.classList.remove("text-red-600");
+      message.classList.add("text-green-600");
+
+      // Esperar antes de cerrar
+      setTimeout(() => {
+
+        closeModal();
+
+        // Mostrar toast externo
+        toast.classList.remove("opacity-0", "pointer-events-none");
+        toast.classList.add("opacity-100");
+
+        setTimeout(() => {
+          toast.classList.add("opacity-0");
+          toast.classList.remove("opacity-100");
+        }, 3000);
+
+        // Reset total
+        form.reset();
+        btnText.textContent = "Enviar solicitud";
+        submitBtn.disabled = false;
+        submitBtn.classList.remove("opacity-70", "cursor-not-allowed");
+        message.textContent = "";
+
+      }, 1800);
+
     } else {
-      message.textContent = "Ocurrió un error. Intente nuevamente.";
+      throw new Error();
     }
+
+  } catch (error) {
+    spinner.classList.add("hidden");
+    btnText.textContent = "Error";
+    message.textContent = "Ocurrió un error. Intente nuevamente.";
+    message.classList.add("text-red-600");
+
+    submitBtn.disabled = false;
+    submitBtn.classList.remove("opacity-70", "cursor-not-allowed");
   }
 });
 </script>
@@ -97,12 +165,31 @@ form?.addEventListener("submit", async (e) => {
   border: 1px solid #ddd;
   padding: 10px;
   border-radius: 12px;
+  transition: all .2s ease;
 }
+.input-style:focus {
+  border-color: #dc2626;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(220,38,38,.2);
+}
+
 .animate-fadeIn {
   animation: fadeIn .3s ease;
 }
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(.95); }
   to { opacity: 1; transform: scale(1); }
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid white;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 </style>

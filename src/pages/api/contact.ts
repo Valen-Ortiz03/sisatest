@@ -43,7 +43,7 @@ export const POST: APIRoute = async ({ request }) => {
         
         <tr>
           <td align="center" style="padding-bottom:20px;">
-            <img src="https://tusitio.com/logo.png" alt="Mudanzas SISA" width="180" style="display:block;" />
+            <img src="logo-sisa.webp" alt="Mudanzas SISA" width="180" style="display:block;" />
           </td>
         </tr>
 
@@ -117,7 +117,7 @@ export const POST: APIRoute = async ({ request }) => {
         <!-- LOGO -->
         <tr>
           <td>
-            <img src="https://tusitio.com/logo.png" alt="Mudanzas SISA" width="180" style="display:block;margin:0 auto 20px;" />
+            <img src="/logo-sisa.png" alt="Mudanzas SISA" width="180" style="display:block;margin:0 auto 20px;" />
           </td>
         </tr>
 
@@ -169,7 +169,7 @@ export const POST: APIRoute = async ({ request }) => {
         <!-- BOTÓN PRINCIPAL -->
         <tr>
           <td style="padding:30px 0;">
-            <a href="https://tusitio.com"
+            <a href="https://sisamudanzas.com"
                style="background:#1D4ED8;color:#ffffff;padding:14px 28px;text-decoration:none;border-radius:6px;font-weight:bold;display:inline-block;">
                Visitar nuestro sitio
             </a>
@@ -180,10 +180,10 @@ export const POST: APIRoute = async ({ request }) => {
         <tr>
           <td style="padding-top:10px;">
             <p style="margin:5px 0;">
-              📞 <a href="tel:+549XXXXXXXXXX" style="color:#1D4ED8;text-decoration:none;">+54 9 XXX XXX XXXX</a>
+              📞 <a href="tel:+5491154586060" style="color:#1D4ED8;text-decoration:none;">+54 9 11 5458 6060</a>
             </p>
             <p style="margin:5px 0;">
-              💬 <a href="https://wa.me/549XXXXXXXXXX" style="color:#1D4ED8;text-decoration:none;">WhatsApp directo</a>
+              💬 <a href="https://wa.me/5491154586060" style="color:#1D4ED8;text-decoration:none;">WhatsApp directo</a>
             </p>
             <p style="margin:5px 0;">
               ✉ <a href="mailto:contacto@mudanzassisa.com" style="color:#1D4ED8;text-decoration:none;">contacto@mudanzassisa.com</a>
