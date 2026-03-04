@@ -123,20 +123,13 @@ body::after {
 
 @media (max-width: 768px) {
 
-  
-  .backdrop-blur-md,
-  .backdrop-blur-lg {
-    backdrop-filter: none !important;
+  .revealed {
+    transform: none !important;
+    transition: opacity 0.25s ease !important;
   }
 
- 
-  [class*="shadow-"] {
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08) !important;
-  }
-
-
-  * {
-    transition-duration: 0.25s !important;
+  [data-reveal] {
+    transform: none !important;
   }
 
 }
