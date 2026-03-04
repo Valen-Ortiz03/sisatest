@@ -4,33 +4,30 @@ export function initReveal() {
   const elements = document.querySelectorAll<HTMLElement>("[data-reveal]");
   if (!elements.length) return;
 
+  const isMobile = window.innerWidth < 768;
+
+  
+  if (isMobile) {
+    elements.forEach((el) => {
+      el.classList.add("revealed");
+    });
+    return;
+  }
+
   const observer = new IntersectionObserver(
-    (entries) => {
+    (entries, observer) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
 
-        const el = entry.target as HTMLElement;
-        const delay = Number(el.dataset.revealDelay || 0);
-
-        setTimeout(() => {
-          el.classList.add("revealed");
-        }, delay);
-
-        observer.unobserve(el);
+        entry.target.classList.add("revealed");
+        observer.unobserve(entry.target);
       });
     },
     {
-      threshold: 0.12,
-      rootMargin: "0px 0px -80px 0px",
+      threshold: 0.15,
+      rootMargin: "0px 0px -60px 0px",
     }
   );
 
-  elements.forEach((el, i) => {
-    if (!el.dataset.revealDelay) {
-      el.dataset.revealDelay = String(i * 40);
-    }
-    observer.observe(el);
-  });
-
-  console.log("Reveal PRO iniciado:", elements.length);
+  elements.forEach((el) => observer.observe(el));
 }

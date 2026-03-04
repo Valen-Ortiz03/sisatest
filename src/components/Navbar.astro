@@ -9,23 +9,25 @@ const links = [
 <header
   id="navbar"
   class="fixed top-0 left-0 w-full z-50
-         transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+         transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
 >
   <nav
     id="navbar-inner"
     class="mx-auto max-w-7xl px-6 py-3
            flex items-center justify-between
            rounded-b-2xl
-           bg-white/80 backdrop-blur-lg
-           shadow-[0_10px_30px_-10px_rgba(0,0,0,0.12)]
-           transition-all duration-500"
+           bg-white/90 md:bg-white/80
+           md:backdrop-blur-lg
+           shadow-lg
+           transition-all duration-300"
   >
     <!-- LOGO -->
     <a href="/" class="flex items-center">
       <img
         src="/logo-sisa.webp"
         alt="Mudanzas SISA"
-        class="h-20 w-auto object-contain"
+        class="h-16 md:h-20 w-auto object-contain"
+        loading="eager"
       />
     </a>
 
@@ -39,7 +41,7 @@ const links = [
           <a
             href={l.href}
             data-link
-            class="transition-colors duration-300"
+            class="transition-colors duration-200"
           >
             {l.label}
           </a>
@@ -47,7 +49,7 @@ const links = [
           <span
             class="absolute left-0 -bottom-1 h-[2px] w-0
                    bg-red-600
-                   transition-all duration-300 ease-out"
+                   transition-all duration-200 ease-out"
           />
         </li>
       ))}
@@ -59,9 +61,9 @@ const links = [
       class="md:hidden flex flex-col gap-1.5"
       aria-label="Abrir menú"
     >
-      <span class="w-6 h-0.5 bg-gray-900 transition-all duration-300"></span>
-      <span class="w-6 h-0.5 bg-gray-900 transition-all duration-300"></span>
-      <span class="w-6 h-0.5 bg-gray-900 transition-all duration-300"></span>
+      <span class="w-6 h-0.5 bg-gray-900"></span>
+      <span class="w-6 h-0.5 bg-gray-900"></span>
+      <span class="w-6 h-0.5 bg-gray-900"></span>
     </button>
   </nav>
 
@@ -69,11 +71,11 @@ const links = [
   <div
     id="mobile-menu"
     class="md:hidden absolute top-full left-0 w-full
-           bg-white/95 backdrop-blur-md
-           shadow-2xl shadow-black/10
+           bg-white
+           shadow-xl
            border-t border-black/5
            opacity-0 pointer-events-none
-           transition-all duration-300"
+           transition-opacity duration-200"
   >
     <ul class="flex flex-col text-center py-6 gap-6 font-medium text-gray-800">
       {links.map((l) => (
@@ -102,105 +104,82 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const currentPath = window.location.pathname;
   const isHome = currentPath === "/";
+  const hero = document.querySelector("section");
+
+  let heroHeight = hero ? hero.offsetHeight : 0;
+  let ticking = false;
 
   // -----------------------------
-  // NAVBAR VISIBILIDAD
+  // NAVBAR + ACTIVE LOGIC (OPTIMIZADO)
   // -----------------------------
-  if (!isHome) {
-    navbar.classList.add("opacity-100", "translate-y-0");
-  } else {
-    navbar.classList.add("opacity-0", "-translate-y-full");
 
-    const hero = document.querySelector("section");
+  function update() {
 
-    const updateNavbar = () => {
-      if (!hero) return;
-
-      const heroHeight = hero.offsetHeight;
+    // 🔹 Mostrar / ocultar navbar
+    if (isHome && hero) {
       const scrolledPastHero = window.scrollY > heroHeight - 80;
 
       navbar.classList.toggle("opacity-0", !scrolledPastHero);
       navbar.classList.toggle("-translate-y-full", !scrolledPastHero);
       navbar.classList.toggle("opacity-100", scrolledPastHero);
       navbar.classList.toggle("translate-y-0", scrolledPastHero);
-    };
+    }
 
-    window.addEventListener("scroll", updateNavbar);
-    updateNavbar();
-  }
+    // 🔹 Active links (más liviano)
+    const hash = window.location.hash;
 
-  // -----------------------------
-  // ACTIVE LINKS
-  // -----------------------------
-
-  function clearActive() {
     navLinks.forEach(link => {
       const underline = link.nextElementSibling;
       link.classList.remove("text-red-600");
       if (underline) underline.style.width = "0%";
     });
+
+    navLinks.forEach(link => {
+      const href = link.getAttribute("href");
+
+      // Página normal
+      if (!href.includes("#") && href === currentPath) {
+        activate(link);
+      }
+
+      // Home con hash
+      if (isHome && hash && href === "/" + hash) {
+        activate(link);
+      }
+    });
   }
 
-  function activateLink(link) {
+  function activate(link) {
     const underline = link.nextElementSibling;
     link.classList.add("text-red-600");
     if (underline) underline.style.width = "100%";
   }
 
-  function setActive() {
-    clearActive();
-
-    const hash = window.location.hash;
-
-    // 🔴 Caso página normal (ej: /nosotros)
-    navLinks.forEach(link => {
-      const href = link.getAttribute("href");
-
-      if (!href.includes("#") && href === currentPath) {
-        activateLink(link);
-      }
-    });
-
-    // 🔵 Caso secciones del Home
-    if (isHome) {
-
-      // Si hay hash (ej: /#guardamuebles)
-      if (hash) {
-        navLinks.forEach(link => {
-          if (link.getAttribute("href") === "/" + hash) {
-            activateLink(link);
-          }
-        });
-      } else {
-        // Scroll spy automático
-        navLinks.forEach(link => {
-          const href = link.getAttribute("href");
-
-          if (href.startsWith("/#")) {
-            const sectionId = href.replace("/#", "");
-            const section = document.getElementById(sectionId);
-
-            if (!section) return;
-
-            const rect = section.getBoundingClientRect();
-
-            if (rect.top <= 120 && rect.bottom >= 120) {
-              activateLink(link);
-            }
-          }
-        });
-      }
+  function onScroll() {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        update();
+        ticking = false;
+      });
+      ticking = true;
     }
   }
 
-  window.addEventListener("scroll", setActive);
-  window.addEventListener("hashchange", setActive);
+  if (!isHome) {
+    navbar.classList.add("opacity-100", "translate-y-0");
+  } else {
+    navbar.classList.add("opacity-0", "-translate-y-full");
+  }
 
-  setActive();
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("hashchange", update);
+
+  update();
 
   // -----------------------------
   // MOBILE MENU
   // -----------------------------
+
   menuBtn?.addEventListener("click", () => {
     const open = mobileMenu.classList.contains("opacity-100");
 
