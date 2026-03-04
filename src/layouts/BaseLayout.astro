@@ -34,7 +34,7 @@ const { title = "Mudanzas SISA" } = Astro.props;
 
     html { font-family: "Montserrat", system-ui, sans-serif; }
 
-    body {
+   html, body {
       margin: 0;
       background: #ffffff;
       color: #111827;
@@ -43,7 +43,8 @@ const { title = "Mudanzas SISA" } = Astro.props;
   </style>
 </head>
 
-<body class="antialiased relative">
+<body class="antialiased relative bg-transparent">
+  <div class="min-h-screen bg-white relative z-10">
 
   <BackgroundFX />
   <Navbar />
@@ -63,5 +64,6 @@ const { title = "Mudanzas SISA" } = Astro.props;
 
   
 </script>
+  </div>
 </body>
 </html>
