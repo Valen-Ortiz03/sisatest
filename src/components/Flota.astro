@@ -3,7 +3,7 @@
 const vehicles = [
   {
     image: "/flota-1.webp",
-    name: "Camión chico",
+    name: "Camión chico (15m³)",
     capacity: "Ideal para departamentos de 1–2 ambientes",
     features: [
       "Acceso a calles angostas",
@@ -14,8 +14,8 @@ const vehicles = [
   },
   {
     image: "/flota-2.webp",
-    name: "Camión mediano",
-    capacity: "Recomendado para 3–4 ambientes",
+    name: "Camión mediano (25m³)",
+    capacity: "Recomendado para 2–3 ambientes",
     features: [
       "Mayor volumen de carga",
       "Mudanzas familiares",
@@ -25,7 +25,7 @@ const vehicles = [
   },
   {
     image: "/flota-3.webp",
-    name: "Camión grande",
+    name: "Camión grande  (50m³)",
     capacity: "Perfecto para casas completas",
     features: [
       "Gran capacidad",
@@ -170,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const loop = (time: number) => {
     if (!playing) return;
 
-    if (time - lastTime > 5000) {
+    if (time - lastTime > 10000) {
       index = (index + 1) % total;
       update();
       lastTime = time;
