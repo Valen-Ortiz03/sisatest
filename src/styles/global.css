@@ -121,7 +121,7 @@ body::after {
   filter: blur(0);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 800px) {
 
   .revealed {
     transform: none !important;
